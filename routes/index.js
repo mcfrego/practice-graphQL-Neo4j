@@ -1,9 +1,8 @@
 const router = require('express').Router()
+const restRouter = require('./rest.route.js')
+const graphqlRouter = require('./graphql.route.js')
 
-const {
-  getAllUsers
-} = require('../controllers/user.controller.js')
-
-router.get('/', getAllUsers)
+router.use('/rest', restRouter)
+router.use('/graphql', graphqlRouter)
 
 module.exports = router
