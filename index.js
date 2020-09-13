@@ -1,5 +1,6 @@
 const cors = require('cors')
 const express = require('express')
+const mongoose = require('mongoose')
 const morgan = require('morgan')
 
 const app = express()
@@ -18,11 +19,14 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => {
-  res.json('Hello Momo (finally)!')
-})
+const router = require('./routes/index')
+app.use('/api', router)
 
-app.listen(8000, (err) => {
+mongoose.connect(
+  config.mongoURL + config.mongoDBName, 
+  { useNewUrlParser: true, useUnifiedTopology: true})
+
+app.listen(config.port, (err) => {
   console.info('\n\n' + '>'.repeat(40))
   console.info('GrapgQL + Neo4j Server Live')
   console.info(`PORT: http://localhost:${config.port}`)
